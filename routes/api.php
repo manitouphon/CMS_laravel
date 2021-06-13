@@ -27,35 +27,36 @@ Route::prefix('auth')->group(function () {
     Route::post('/reset-password', [ResetPasswordController::class, 'passwordResetProcess']);
 });
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    //index
-    Route::get('Doctor', [StaffController::class, 'getDoctor']);
-    Route::get('Pharmacist', [StaffController::class, 'getPharmacist']);
-    Route::get('Receptionist', [StaffController::class, 'getReceptionist']);
+Route::resource('/staff', StaffController::class);
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+//     //index
+//     Route::get('Doctor', [StaffController::class, 'getDoctor']);
+//     Route::get('Pharmacist', [StaffController::class, 'getPharmacist']);
+//     Route::get('Receptionist', [StaffController::class, 'getReceptionist']);
 
-    //Update
-    Route::put('Doctor/{id}', [StaffController::class, 'updateDoctor']);
-    Route::put('Pharmacist/{id}', [StaffController::class, 'updatePharmacist']);
-    Route::put('Receptionist/{id}', [StaffController::class, 'updateReceptionist']);
+//     //Update
+//     Route::put('Doctor/{id}', [StaffController::class, 'updateDoctor']);
+//     Route::put('Pharmacist/{id}', [StaffController::class, 'updatePharmacist']);
+//     Route::put('Receptionist/{id}', [StaffController::class, 'updateReceptionist']);
 
-    //Find
-    Route::get('Doctor/{id}', [StaffController::class, 'findDoctor']);
-    Route::get('Pharmacist/{id}', [StaffController::class, 'findPharmacist']);
-    Route::get('Receptionist/{id}', [StaffController::class, 'findReceptionist']);
+//     //Find
+//     Route::get('Doctor/{id}', [StaffController::class, 'findDoctor']);
+//     Route::get('Pharmacist/{id}', [StaffController::class, 'findPharmacist']);
+//     Route::get('Receptionist/{id}', [StaffController::class, 'findReceptionist']);
 
-    //Add
-    Route::post('Doctor', [StaffController::class, 'addDoctor']);
-    Route::post('Pharmacist', [StaffController::class, 'addPharmacist']);
-    Route::post('Receptionist', [StaffController::class, 'addReceptionist']);
+//     //Add
+//     Route::post('Doctor', [StaffController::class, 'addDoctor']);
+//     Route::post('Pharmacist', [StaffController::class, 'addPharmacist']);
+//     Route::post('Receptionist', [StaffController::class, 'addReceptionist']);
 
-    //Destroy
-    Route::delete('Doctor/{id}', [StaffController::class, 'destroyDoctor']);
-    Route::delete('Pharmacist/{id}', [StaffController::class, 'destroyPharmacist']);
-    Route::delete('Receptionist/{id}', [StaffController::class, 'destroyReceptionist']);
+//     //Destroy
+//     Route::delete('Doctor/{id}', [StaffController::class, 'destroyDoctor']);
+//     Route::delete('Pharmacist/{id}', [StaffController::class, 'destroyPharmacist']);
+//     Route::delete('Receptionist/{id}', [StaffController::class, 'destroyReceptionist']);
 
-    Route::get('patient', [PatientController::class, 'getPatient']);
-    Route::get('patient/{pat_id}', [PatientController::class, 'findPatient']);
-    Route::post('patient/{pat_id}', [PatientController::class, 'updatePatient']);
-    Route::post('patient}', [PatientController::class, 'addPatient']);
+//     Route::get('patient', [PatientController::class, 'getPatient']);
+//     Route::get('patient/{pat_id}', [PatientController::class, 'findPatient']);
+//     Route::post('patient/{pat_id}', [PatientController::class, 'updatePatient']);
+//     Route::post('patient}', [PatientController::class, 'addPatient']);
 
-});
+// });
