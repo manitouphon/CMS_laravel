@@ -3,28 +3,47 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
 
-    use ResetsPasswords;
+    public function passwordResetProcess(UpdatePasswordRequest $request)
+    {
+        return $this->updatePasswordRow($request)->count() > 0 ? $this->resetPassword($request) : $this->tokenNotFoundError();
+    }
 
-    /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    /* Verify if token is valid*/
+    private function updatePasswordRow($request)
+    {
+        return DB::table('password_resets')->where([
+            'email' => $request->email,
+            'token' => $request->passwordToken,
+        ]);
+    }
+
+    // Token not found response
+    private function tokenNotFoundError()
+    {
+        return response()->json([
+            'error' => 'Either your email or token is wrong.',
+        ], 401);
+    }
+
+    // Reset password
+    private function resetPassword($request)
+    {
+        // find email
+        $userData = User::whereEmail($request->email)->first();
+        // update password
+        $userData->update([
+            'password' => bcrypt($request->password),
+        ]);
+        // remove verification data from db
+        $this->updatePasswordRow($request)->delete();
+        // reset password response
+        return response()->json([
+            'data' => 'Password has been updated.',
+        ], Response::HTTP_CREATED);
+    }
+
 }
