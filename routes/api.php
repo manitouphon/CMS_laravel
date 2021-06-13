@@ -27,29 +27,38 @@ Route::post('/register',[RegisterController::class,'register']);
 
 
 Route::group(['middleware'=>['auth:sanctum']], function () {
+    //index
     Route::get('Doctor', [StaffController::class, 'getDoctor']);
     Route::get('Pharmacist', [StaffController::class, 'getPharmacist']);
     Route::get('Receptionist', [StaffController::class, 'getReceptionist']);
 
-    Route::patch('Doctor/{id}', [StaffController::class,'updateDoctor']);
-    Route::patch('Pharmacist/{id}', [StaffController::class,'updatePharmacist']);
-    Route::patch('Receptionist/{id}', [StaffController::class,'updateReceptionist']);
+    //Update
+    Route::post('Doctor/{id}', [StaffController::class,'updateDoctor']);
+    Route::post('Pharmacist/{id}', [StaffController::class,'updatePharmacist']);
+    Route::post('Receptionist/{id}', [StaffController::class,'updateReceptionist']);
 
+    //Find
     Route::get('Doctor/{id}', [StaffController::class,'findDoctor']);
     Route::get('Pharmacist/{id}', [StaffController::class,'findPharmacist']);
     Route::get('Receptionist/{id}', [StaffController::class,'findReceptionist']);
 
-    Route::post('addDoctor',[StaffController::class,'addDoctor']);
-    Route::post('addPharmacist',[StaffController::class,'addPharmacist']);
-    Route::post('addReceptionist',[StaffController::class,'addReceptionist']);
+    //Add
+    Route::post('Doctor',[StaffController::class,'addDoctor']);
+    Route::post('Pharmacist',[StaffController::class,'addPharmacist']);
+    Route::post('Receptionist',[StaffController::class,'addReceptionist']);
 
-    Route::delete('deleteDoctor/{id}', [StaffController::class,'destroyDoctor']);
-    Route::delete('deletePharmacist/{id}', [StaffController::class,'destroyPharmacist']);
-    Route::delete('deleteReceptionist/{id}', [StaffController::class,'destroyReceptionist']);
+    //Destroy
+    Route::delete('Doctor/{id}', [StaffController::class,'destroyDoctor']);
+    Route::delete('Pharmacist/{id}', [StaffController::class,'destroyPharmacist']);
+    Route::delete('Receptionist/{id}', [StaffController::class,'destroyReceptionist']);
 
 
     Route::get('patient',[PatientController::class,'getPatient']);
-    Route::get('patient/{pat_id}',[PatientController::class,'getPatient']);
+    Route::get('patient/{pat_id}',[PatientController::class,'findPatient']);
+    Route::post('patient/{pat_id}',[PatientController::class,'updatePatient']);
+    Route::post('patient}',[PatientController::class,'addPatient']);
+
+
 });
 
 
