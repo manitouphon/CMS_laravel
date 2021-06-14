@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MedicineRequest;
 use App\Models\Medicine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class MedicineController extends Controller
 {
@@ -15,7 +16,10 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        return response()->json(['data' => Medicine::all()]);
+        if(Gate::allows('isPharmacist') || Gate::allows('isAdmin')){
+            return response()->json(['data' => Medicine::all()]);
+        }
+        return response()->json(['Message' => "You do not have access to this resource"],403);
     }
 
     /**
