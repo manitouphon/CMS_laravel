@@ -26,10 +26,14 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Gate::define("isAdmin", function () {
             return auth()->user()->role === 'admin';
-        }, function () {
-            return response()->json(['message' => "nothing"], 403);
         });
 
-        //
+        Gate::define("isReceptionist", function(){
+            return auth()->user()->role === 'receptionist';
+        });
+        Gate::define("isPharmacist", function(){
+            return auth()->user()->role === 'pharmacist';
+        });
+
     }
 }
