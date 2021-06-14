@@ -22,6 +22,7 @@ class CreateServedServicesTable extends Migration
             $table->integer('surgery_report_id')->nullable();
             $table->integer('medicine_purchase_id')->nullable();
             $table->integer('other_service_id')->nullable();
+            $table->timestamps();
         });
     }
 

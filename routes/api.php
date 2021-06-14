@@ -8,7 +8,7 @@ use App\Http\Controllers\BloodBagController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\StaffController;
-use App\Models\BloodBag;
+use App\Http\Controllers\WorkingScheduleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,8 +31,16 @@ Route::prefix('auth')->group(function () {
     Route::post('/forget-password', [ForgotPasswordController::class, 'sendPasswordResetEmail']);
     Route::post('/reset-password', [ResetPasswordController::class, 'passwordResetProcess']);
 });
+/* ================Staff controller======================== */
+Route::resource('/staff', StaffController::class);
+/* ================Bed Allotment controller======================== */
+Route::resource('/bed-allotment', BedAllotmentController::class);
+/* ================Medicine controller======================== */
+Route::resource('/medicine', MedicineController::class);
+/* ==========Working Schedule Controller================== */
+Route::resource('/working-schedule', WorkingScheduleController::class);
 
-
+/* ==========Patient Controller================== */
 Route::prefix('patient')->middleware("auth:sanctum")->group(function () {
     /* ==========Patient Controller================== */
     Route::get('/', [PatientController::class, 'getPatient']);
@@ -41,11 +49,10 @@ Route::prefix('patient')->middleware("auth:sanctum")->group(function () {
     Route::put("/{pat_id}", [PatientController::class, 'updatePatient']);
     Route::delete("/{pat_id}", [PatientController::class, 'deletePatient']);
 
-
 });
 
 //Admin Only Middleware (Sanctum)
-Route::group(["middleware" => "auth:sanctum"],function (){
+Route::group(["middleware" => "auth:sanctum"], function () {
     /* ================Staff controller======================== */
     Route::resource('/staff', StaffController::class);
     /* ================Bed Allotment controller======================== */
@@ -55,5 +62,5 @@ Route::group(["middleware" => "auth:sanctum"],function (){
     /* ================Birth report Controller======================== */
 //    Route::resource('birth-report', )
     /* ================Blood Bag Controller======================== */
-    Route::post('blood_bag',[BloodBagController::class, 'update']);
+    Route::post('blood_bag', [BloodBagController::class, 'update']);
 });

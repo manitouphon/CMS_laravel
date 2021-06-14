@@ -18,6 +18,7 @@ class CreateServedServicesCollectionTable extends Migration
             $table->integer('served_service_id');
             $table->integer('pat_id');
             $table->integer('total_payment_id');
+            $table->timestamps();
         });
     }
 
@@ -29,5 +30,6 @@ class CreateServedServicesCollectionTable extends Migration
     public function down()
     {
         Schema::dropIfExists('served_services_collection');
+
     }
 }

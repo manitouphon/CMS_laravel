@@ -23,7 +23,8 @@ class RegisterNewUserRequest extends FormRequest
      */
     public function rules()
     {
-        return ['email' => 'required|email|unique:users',
+        return [
+            'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|confirmed|max:20',
             'first_name' => "required",
             'last_name' => "required",
@@ -36,6 +37,7 @@ class RegisterNewUserRequest extends FormRequest
             'address' => "required",
             'remark' => "required",
             'img_url' => "required|string",
-            'role' => "required|string"];
+            'role' => "required|string",
+        ];
     }
 }

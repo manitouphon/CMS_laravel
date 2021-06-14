@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MedicineRequest;
-use App\Models\Medicine;
+use App\Http\Requests\WorkingScheduleRequest;
+use App\Http\Resources\WorkingScheduleResource;
+use App\Models\WorkingSchedule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
-class MedicineController extends Controller
+class WorkingScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,8 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        if(Gate::allows('isPharmacist') || Gate::allows('isAdmin')){
-            return response()->json(['data' => Medicine::all()]);
-        }
-        return response()->json(['Message' => "You do not have access to this resource"],403);
+        // $working = new WorkingSchedule();
+        return ['data' => WorkingScheduleResource::collection(WorkingSchedule::all())];
     }
 
     /**
@@ -38,11 +36,11 @@ class MedicineController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MedicineRequest $request)
+    public function store(WorkingScheduleRequest $request)
     {
-        $medicine = Medicine::create($request->all());
+        $workingScedule = WorkingSchedule::create($request->all());
 
-        return response()->json(['message' => "Medicine successfully added", 'data' => $medicine]);
+        return response()->json(['message' => "Working scedule added", 'data' => $workingScedule]);
     }
 
     /**
@@ -76,10 +74,7 @@ class MedicineController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $medicine = Medicine::findOrFail($id);
-        $medicine->update($request->all());
-
-        return response(['message' => "Update successfully"]);
+        //
     }
 
     /**
@@ -90,8 +85,6 @@ class MedicineController extends Controller
      */
     public function destroy($id)
     {
-        $medicine = Medicine::findOrFail($id);
-        $medicine->delete();
-        return response()->json(['message' => "Medicine successfully deleted"]);
+        //
     }
 }
