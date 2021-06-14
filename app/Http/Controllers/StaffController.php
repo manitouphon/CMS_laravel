@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ServePatientRequest;
+use App\Models\ServedService;
+use App\Models\ServedServicesCollection;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class StaffController extends Controller
@@ -13,12 +17,16 @@ class StaffController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->role === 'admin') {
+        $roles = ['admin', 'pharmacist', 'receptionist', 'doctor'];
 
-            return response()->json(['return' => "nothing"]);
-        } else {
-            return response()->json(['return' => "404"]);
+        if (empty($request->role)) {
+            return response()->json(['data' => Staff::all()]);
+        }
 
+        foreach ($roles as $key => $role) {
+            if ($request->role === $role) {
+                return response()->json(['data' => Staff::where("role", $role)->get()]);
+            }
         }
     }
 
@@ -39,9 +47,20 @@ class StaffController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ServePatientRequest $request)
     {
-        /* ===Insert Into Serve Service  === */
+
+        /* =========Check docktor availability============= */
+        if (Staff::checkIfDocterAvialable($request->doc_id)) {
+            /* =======Insert Into Serve Service  ======= */
+            $serverService = ServedService::create($request->all());
+            $serverServiceCollection = ServedServicesCollection::create(array_merge($request->all(), ['served_service_id' => $serverService->id]));
+            /* ===========Insert into payment table===================== */
+            // TODO is staff also add payment while serve?
+            return response()->json(['message' => "Patient has been served", 'data' => $serverServiceCollection]);
+        } else {
+            return response()->json(['message' => "Docter cannot handler work anymore"], 422);
+        };
 
     }
 
@@ -76,7 +95,7 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // ================Update Code Here ====================
     }
 
     /**

@@ -72,7 +72,7 @@ class BedAllotmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $bed = BedAllotment::find($id);
+        $bed = BedAllotment::findOrFail($id);
         $bed->update($request->all());
 
         return response(['message' => "Update successfully"]);
@@ -87,7 +87,7 @@ class BedAllotmentController extends Controller
      */
     public function destroy($id)
     {
-        $bed = BedAllotment::find($id);
+        $bed = BedAllotment::findOrFail($id);
         $bed->delete();
         return response()->json(['message' => "Bed already deleted"]);
     }

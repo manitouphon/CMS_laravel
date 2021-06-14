@@ -38,4 +38,5 @@ class StuffRequest extends FormRequest
             'role' => "required",
         ];
     }
+
 }

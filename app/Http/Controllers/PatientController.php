@@ -10,31 +10,26 @@ class PatientController extends Controller
 {
     public function getPatient(Request $request)
     {
-        return Patient::all();
+        return response()->json(['data' => Patient::all()]);
     }
 
     public function findPatient(Request $request, $pat_id)
     {
-        if (Patient::find($pat_id) === null) {
-            return Response('Patient not found', 404);
-        }
+
         if ($request->user()->role === 'admin') {
-            return Patient::find($pat_id);
+            return response()->json(['data' => Patient::findOrFail($pat_id)]);
         } else {
-            return Response('Access Forbidden', 403);
+            abort(403);
         }
 
     }
 
     public function updatePatient(Request $request, $pat_id)
     {
-        if (Patient::find($pat_id) === null) {
-            return Response('Patient not found', 404);
-        }
         if ($request->user()->role === 'admin') {
-            return Patient::find($pat_id)->update($request->all());
+            return response()->json(['data' => Patient::findOrFail($pat_id)->update($request->all())]);
         } else {
-            return Response('Access Forbidden', 403);
+            abort(403);
         }
 
     }
@@ -42,20 +37,18 @@ class PatientController extends Controller
     public function addPatient(PatientRequest $request)
     {
         if ($request->user()->role === 'admin') {
-            return Patient::create($request->all());
+            return response()->json(['message' => "Patient successfully added", 'data' => Patient::create($request->all())]);
+        } else {
+            abort(403);
         }
     }
 
     public function deletePatient(Request $request, $pat_id)
     {
-        if (Patient::find($pat_id) === null) {
-            return Response('Patient not found', 404);
-        }
         if ($request->user()->role === 'admin') {
-            return Patient::find($pat_id);
+            return Patient::findOrFail($pat_id)->delete();
         } else {
-            return Response('Access Forbidden', 403);
+            abort(403);
         }
-
     }
 }

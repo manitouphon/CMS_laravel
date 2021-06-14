@@ -7,6 +7,7 @@ use App\Http\Controllers\BedAllotmentController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\WorkingScheduleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,9 @@ Route::resource('/staff', StaffController::class);
 Route::resource('/bed-allotment', BedAllotmentController::class);
 /* ================Medicine controller======================== */
 Route::resource('/medicine', MedicineController::class);
+/* ==========Working Schedule Controller================== */
+Route::resource('/working-schedule', WorkingScheduleController::class);
+
 /* ==========Patient Controller================== */
 Route::prefix('patient')->middleware("auth:sanctum")->group(function () {
     Route::get('/', [PatientController::class, 'getPatient']);

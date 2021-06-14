@@ -15,11 +15,10 @@ class CreateTotalPaymentTable extends Migration
     {
         Schema::create('total_payments', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('date');
             $table->float('sub_total', 10, 2);
             $table->float('pay', 10, 2);
             $table->float('balance', 10, 2);
-
+            $table->timestamps();
         });
     }
 
