@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreatePrescriptionItemTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreatePrescriptionItemTable extends Migration
             $table->bigIncrements('id')->unsigned();
             $table->string('medicine_name');
             $table->string('dosage');
-            $table->foreignId('prescription_id')->constrained('prescription');
+            $table->integer('prescription_id');
 
         });
     }

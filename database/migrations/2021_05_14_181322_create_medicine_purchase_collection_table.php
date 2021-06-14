@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMedicinePurchaseCollectionTable extends Migration
 {
@@ -13,10 +13,10 @@ class CreateMedicinePurchaseCollectionTable extends Migration
      */
     public function up()
     {
-        Schema::create('medicine_purchase_collection', function (Blueprint $table) {
+        Schema::create('medicine_purchase_collections', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->foreignId('medicine_purchase_id')->constrained('medicine_purchase');
-            $table->foreignId('med_sale_id')->constrained('med_sale');
+            $table->integer('medicine_purchase_id');
+            $table->integer('med_sale_id');
 
         });
     }

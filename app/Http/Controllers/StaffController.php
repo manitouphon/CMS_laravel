@@ -29,7 +29,8 @@ class StaffController extends Controller
      */
     public function create()
     {
-        //
+        // Add patient
+
     }
 
     /**
@@ -40,7 +41,8 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /* ===Insert Into Serve Service  === */
+
     }
 
     /**

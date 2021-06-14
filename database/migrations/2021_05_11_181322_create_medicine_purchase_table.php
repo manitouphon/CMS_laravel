@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMedicinePurchaseTable extends Migration
 {
@@ -13,10 +13,10 @@ class CreateMedicinePurchaseTable extends Migration
      */
     public function up()
     {
-        Schema::create('medicine_purchase', function (Blueprint $table) {
+        Schema::create('medicine_purchases', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->float('subtotal')->nullable();
-
+            $table->timestamps();
         });
     }
 

@@ -1,12 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-
-
-class CreateBedAllotmentTable extends Migration
+class CreateBedAllotmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,17 +13,19 @@ class CreateBedAllotmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('bed_allotment', function (Blueprint $table) {
+        Schema::create('bed_allotments', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('bed_type');
             $table->integer('bed_number');
-            $table->date('allotment_date')->nullable();
+            $table->string('allotment_date')->nullable();
             $table->time('allotment_time')->nullable();
+
             $table->string('is_discharge');
-            $table->date('discharge_date')->nullable();
-            $table->time('discharge_time')->nullable();
+            $table->string('discharge_date')->nullable();
+            $table->string('discharge_time')->nullable();
             $table->float('service_fee', 11, 2)->nullable();
-            $table->foreignId('nurse_id')->constrained('staff');
+            $table->integer('nurse_id');
+            $table->timestamps();
 
         });
     }
@@ -37,6 +37,6 @@ class CreateBedAllotmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bed_allotment');
+        Schema::dropIfExists('bed_allotments');
     }
 }

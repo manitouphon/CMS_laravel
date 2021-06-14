@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMedicineTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateMedicineTable extends Migration
      */
     public function up()
     {
-        Schema::create('medicine', function (Blueprint $table) {
+        Schema::create('medicines', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('medicine_name');
             $table->string('category');
@@ -23,8 +23,7 @@ class CreateMedicineTable extends Migration
             $table->float('sell_price', 10, 2);
             $table->string('status')->nullable();
             $table->string('description')->nullable();
-            $table->dateTime('expiration_date')->nullable();
-
+            $table->timestamps();
         });
     }
 

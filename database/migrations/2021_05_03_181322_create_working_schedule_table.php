@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateWorkingScheduleTable extends Migration
 {
@@ -15,9 +15,9 @@ class CreateWorkingScheduleTable extends Migration
     {
         Schema::create('working_schedule', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->char('working_day',7)->nullable();
-            $table->dateTime('start_time')->nullable();
-            $table->dateTime('end_time')->nullable();
+            $table->char('working_day', 7)->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
             $table->foreignId('staff_id')->constrained('staff');
         });
     }

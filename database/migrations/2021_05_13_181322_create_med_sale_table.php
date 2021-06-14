@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMedSaleTable extends Migration
 {
@@ -13,12 +13,12 @@ class CreateMedSaleTable extends Migration
      */
     public function up()
     {
-        Schema::create('med_sale', function (Blueprint $table) {
+        Schema::create('med_sales', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->integer('qty');
             $table->float('total', 11, 0);
-            $table->foreignId('medicine_id')->constrained('medicine');
-
+            $table->integer('medicine_id');
+            $table->timestamps();
         });
     }
 

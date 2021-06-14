@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreatePrescriptionTable extends Migration
 {
@@ -13,11 +13,11 @@ class CreatePrescriptionTable extends Migration
      */
     public function up()
     {
-        Schema::create('prescription', function (Blueprint $table) {
+        Schema::create('prescriptions', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('disease', 45)->nullable();
             $table->string('des', 45)->nullable();
-            $table->foreignId('pat_id')->constrained('patients');
+            $table->integer('pat_id');
         });
     }
 
