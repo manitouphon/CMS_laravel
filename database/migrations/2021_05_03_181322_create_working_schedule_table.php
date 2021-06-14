@@ -15,9 +15,11 @@ class CreateWorkingScheduleTable extends Migration
     {
         Schema::create('working_schedule', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->char('working_day', 7)->nullable();
+            $table->char('working_day', 7)->nullable(); // 0
             $table->string('start_time')->nullable();
             $table->string('end_time')->nullable();
+            $table->boolean('status_day')->default(1);
+            $table->boolean('status_hour')->default(1);
             $table->foreignId('staff_id')->constrained('staff');
         });
     }

@@ -16,7 +16,6 @@ class CreateServedServicesCollectionTable extends Migration
         Schema::create('served_services_collections', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->integer('served_service_id');
-            $table->integer('doc_id');
             $table->integer('pat_id');
             $table->integer('total_payment_id');
         });

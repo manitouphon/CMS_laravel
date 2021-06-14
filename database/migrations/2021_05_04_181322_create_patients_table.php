@@ -23,6 +23,7 @@ class CreatePatientsTable extends Migration
             $table->string('address', 45)->nullable();
             $table->string('blood_group')->nullable();
             $table->string('email')->nullable();
+            $table->boolean('status')->default(1);
             $table->mediumText('medical_history')->nullable();
             $table->string('img_url')->nullable();
             $table->timestamps();

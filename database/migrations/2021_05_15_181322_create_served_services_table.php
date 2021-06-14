@@ -16,10 +16,12 @@ class CreateServedServicesTable extends Migration
         Schema::create('served_services', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->float('total_fee', 11, 2)->nullable();
+            $table->integer('doc_id');
             $table->integer('bed_allotment_id')->nullable();
             $table->integer('birth_report_id')->nullable();
             $table->integer('surgery_report_id')->nullable();
             $table->integer('medicine_purchase_id')->nullable();
+            $table->integer('other_service_id')->nullable();
         });
     }
 
