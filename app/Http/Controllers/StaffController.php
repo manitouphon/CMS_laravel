@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ServePatientRequest;
 use App\Models\LogDeletedStaff;
-use App\Models\ServedService;
-use App\Models\ServedServicesCollection;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -20,7 +17,6 @@ class StaffController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = ['admin', 'pharmacist', 'receptionist', 'doctor'];
 
         if (empty($request->role)) {
             return response()->json(['data' => Staff::all()]);
@@ -60,19 +56,7 @@ class StaffController extends Controller
         } else {
             return response()->json(['message' => "Docter cannot handler work anymore"], 422);
         };
-        /* ===Insert Into Serve Service  === */
-        foreach ($this->roles as $role) {
-            if ($request->role === $role) {
-                if (Gate::allows('isAdmin', [$request])) {
-                    Staff::create($request->all());
-                } else {
-                    return response()->json(["Message" => "Access Forbidden"], 403);
 
-                }
-            }
-        }
-        //If nothing is returned in loop
-        return response()->json(["Message" => "Invalid role query call"], 500);
     }
 
     /**
