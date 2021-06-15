@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Staff;
 
 class WorkingScheduleResource extends JsonResource
 {
@@ -17,7 +18,8 @@ class WorkingScheduleResource extends JsonResource
         return [
             'id' => $this->id,
             'working_day' => $this->working_day,
-            'start_time' => $this->start_time,
+            //Return KEY:'start_time' as VAULE:{array of true false mapping with mon-sun}@Manitou
+            'start_time' => Staff::calculateAvailability($this->staffs->id),
             'end_time' => $this->end_time,
             'status_day' => $this->status_day,
             'status_hour' => $this->status_hour,

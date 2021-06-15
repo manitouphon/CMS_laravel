@@ -51,10 +51,19 @@ class Staff extends Model
                 $schDay[$i] = false;
             }
        }
-       return $schDay;
+
+       return[
+            'sun' => $schDay[0],
+            'mon' => $schDay[1],
+            'tue' => $schDay[2],
+            'wed' => $schDay[3],
+            'thu' => $schDay[4],
+            'fri' => $schDay[5],
+            'sat' => $schDay[6]
+        ];
        //STATUS: Working Fine.
 
-       //TODO: Calculate the time and set status_day and status_hour
+       //TODO: Calculate the time and set status_day and status_hour@Manitou
        
 
 
