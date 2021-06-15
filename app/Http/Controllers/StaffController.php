@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ServePatientRequest;
 use App\Models\LogDeletedStaff;
+use App\Models\ServedService;
+use App\Models\ServedServicesCollection;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-
-use App\Models\ServedService;
-use App\Http\Requests\ServePatientRequest;
-use App\Models\ServedServicesCollection;
 
 class StaffController extends Controller
 {
@@ -48,18 +47,18 @@ class StaffController extends Controller
      */
     public function store(ServePatientRequest $request)
     {
-        //Note: Not Creating staff but instead, provides payments process and assign doctor to a patient
-
-        /* =========Check docktor availability============= */
-        if (Staff::checkIfDoctorAvialable($request->doc_id)) {
+        /* =========Check doctor availability============= */
+        if (Staff::checkIfDocterAvialable($request->doc_id)) {
+            /*====Check for pat id existed=====*/
+            /* // TODOS  */
             /* =======Insert Into Serve Service  ======= */
             $serverService = ServedService::create($request->all());
             $serverServiceCollection = ServedServicesCollection::create(array_merge($request->all(), ['served_service_id' => $serverService->id]));
             /* ===========Insert into payment table===================== */
             // TODO is staff also add payment while serve?
-            return response()->json(['message' => "Patient has been served successfully", 'data' => $serverServiceCollection]);
+            return response()->json(['message' => "Patient has been served", 'data' => $serverServiceCollection]);
         } else {
-            return response()->json(['message' => "Doctor is currently busy"], 422);
+            return response()->json(['message' => "Docter cannot handler work anymore"], 422);
         };
 
     }
