@@ -20,4 +20,9 @@ class Patient extends Model
         'img_url',
         'medical_history',
     ];
+
+    public static  function isPatientExited($pat_id): bool
+    {
+        return empty(Patient::find($pat_id)) ;
+    }
 }

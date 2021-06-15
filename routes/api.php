@@ -35,11 +35,12 @@ Route::prefix('auth')->group(function () {
 /* ==========Patient Controller================== */
 Route::prefix('patient')->middleware("auth:sanctum")->group(function () {
     /* ==========Patient Controller================== */
-    Route::get('/', [PatientController::class, 'getPatient']);
-    Route::get('{pat_id}', [PatientController::class, 'getPatient']);
-    Route::post("/", [PatientController::class, 'addPatient']);
-    Route::put("/{pat_id}", [PatientController::class, 'updatePatient']);
-    Route::delete("/{pat_id}", [PatientController::class, 'deletePatient']);
+    Route::get("/serve", [\App\Http\Controllers\PatientServeController::class, 'index']);
+    Route::get('/', [PatientController::class, 'index']);
+    Route::get('{pat_id}', [PatientController::class, 'show']);
+    Route::post("/", [PatientController::class, 'store']);
+    Route::put("/{pat_id}", [PatientController::class, 'update']);
+    Route::delete("/{pat_id}", [PatientController::class, 'destroy']);
 
 });
 

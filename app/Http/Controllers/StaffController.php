@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ServePatientRequest;
 use App\Models\LogDeletedStaff;
+use App\Models\ServedService;
+use App\Models\ServedServicesCollection;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -44,9 +47,10 @@ class StaffController extends Controller
      */
     public function store(ServePatientRequest $request)
     {
-
-        /* =========Check docktor availability============= */
+        /* =========Check doctor availability============= */
         if (Staff::checkIfDocterAvialable($request->doc_id)) {
+            /*====Check for pat id existed=====*/
+            /* // TODOS  */
             /* =======Insert Into Serve Service  ======= */
             $serverService = ServedService::create($request->all());
             $serverServiceCollection = ServedServicesCollection::create(array_merge($request->all(), ['served_service_id' => $serverService->id]));
