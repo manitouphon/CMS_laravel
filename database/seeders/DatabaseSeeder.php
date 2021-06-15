@@ -49,16 +49,6 @@ class DatabaseSeeder extends Seeder
             'qty' => '0'
         ]);
 
-        //Other seed:
-        Medicine::create([
-            "medicine_name" => "Medicine",
-            "category" => "LOL",
-            "company" ,
-            "qty" => 12,
-            "buy_price" ,
-            "sell_price",
-            "status",
-            "description",
-        ]);
+        
     }
 }
