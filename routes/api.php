@@ -10,6 +10,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\WorkingScheduleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +55,13 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     Route::resource('/medicine', MedicineController::class);
     /* ================Birth report Controller======================== */
     /* ================Blood Bag Controller======================== */
-    Route::post('blood_bag', [BloodBagController::class, 'update']);
+    Route::post('/blood_bag', [BloodBagController::class, 'update']);
     /* ==========Working Schedule Controller================== */
     Route::resource('/working-schedule', WorkingScheduleController::class);
 });
+
+
+
+//=======================Testing Purpose Only =================
+
+Route::resource('test', TestingController::class);
