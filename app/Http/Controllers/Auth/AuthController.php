@@ -23,7 +23,7 @@ class AuthController extends Controller
     {
 
         $user = User::create(array_merge($request->validated(), ['password' => bcrypt($request->password)]));
-        $stuff = Staff::create(array_merge($request->validated(), ['user_id' => $user->id]));
+        $staff = Staff::create(array_merge($request->validated(), ['user_id' => $user->id]));
 
         return response()->json(['message' => "User successfully register"]);
 

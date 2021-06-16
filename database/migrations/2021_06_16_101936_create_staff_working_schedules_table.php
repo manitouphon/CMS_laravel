@@ -24,7 +24,7 @@ class CreateStaffWorkingSchedulesTable extends Migration
     }
 
     /**
-   wok  * Reverse the migrations.
+     * Reverse the migrations.
      *
      * @return void
      */

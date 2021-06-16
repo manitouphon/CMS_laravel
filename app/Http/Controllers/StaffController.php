@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ServePatientRequest;
+use App\Models\BedAllotment;
 use App\Models\LogDeletedStaff;
+use App\Models\ServedService;
+use App\Models\Services;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-
-use App\Models\ServedService;
-use App\Http\Requests\ServePatientRequest;
-use App\Models\ServedServicesCollection;
 
 class StaffController extends Controller
 {
@@ -32,7 +32,6 @@ class StaffController extends Controller
                     return response()->json([$role => $data]);
                 } else {
                     return response()->json(["Message" => "Access Forbidden"], 403);
-
                 }
             }
         }
@@ -48,19 +47,21 @@ class StaffController extends Controller
      */
     public function store(ServePatientRequest $request)
     {
-        //Note: Not Creating staff but instead, provides payments process and assign doctor to a patient
-
-        /* =========Check docktor availability============= */
+        /* =========Che ck doctor availability============= */
         if (Staff::checkIfDoctorAvialable($request->doc_id)) {
+            /*====Check for pat id existed=====*/
+            /* // TODOS  */
             /* =======Insert Into Serve Service  ======= */
             $serverService = ServedService::create($request->all());
-            $serverServiceCollection = ServedServicesCollection::create(array_merge($request->all(), ['served_service_id' => $serverService->id]));
+            $service = Services::create(array_merge($request->all(), ['service_id', $serverService->id]));
             /* ===========Insert into payment table===================== */
             // TODO is staff also add payment while serve?
-            return response()->json(['message' => "Patient has been served successfully", 'data' => $serverServiceCollection]);
+
+
+            return response()->json(['message' => "Patient has been served", 'data' => $serverService]);
         } else {
-            return response()->json(['message' => "Doctor is currently busy"], 422);
-        };
+            return response()->json(['message' => "Doctor cannot handler work anymore"], 422);
+        }
 
     }
 
