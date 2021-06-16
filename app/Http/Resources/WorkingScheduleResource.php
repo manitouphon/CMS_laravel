@@ -19,7 +19,7 @@ class WorkingScheduleResource extends JsonResource
             'id' => $this->id,
             'working_day' => $this->working_day,
             //Return KEY:'start_time' as VAULE:{array of true false mapping with mon-sun}@Manitou
-            'start_time' => Staff::calculateAvailability($this->staffs->id),
+            'start_time' => '',
             'end_time' => $this->end_time,
             'status_day' => $this->status_day,
             'status_hour' => $this->status_hour,

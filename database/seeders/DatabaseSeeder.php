@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\BloodBag;
-use App\Models\Medicine;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,38 +16,37 @@ class DatabaseSeeder extends Seeder
     {
         //Necessary:
         BloodBag::create([
-            'blood_group'=>'A+',
-            'qty' => '0'
+            'blood_group' => 'A+',
+            'qty' => '0',
         ]);
         BloodBag::create([
-            'blood_group'=>'A-',
-            'qty' => '0'
+            'blood_group' => 'A-',
+            'qty' => '0',
         ]);
         BloodBag::create([
-            'blood_group'=>'AB+',
-            'qty' => '0'
+            'blood_group' => 'AB+',
+            'qty' => '0',
         ]);
         BloodBag::create([
-            'blood_group'=>'AB-',
-            'qty' => '0'
+            'blood_group' => 'AB-',
+            'qty' => '0',
         ]);
         BloodBag::create([
-            'blood_group'=>'B+',
-            'qty' => '0'
+            'blood_group' => 'B+',
+            'qty' => '0',
         ]);
         BloodBag::create([
-            'blood_group'=>'B-',
-            'qty' => '0'
+            'blood_group' => 'B-',
+            'qty' => '0',
         ]);
         BloodBag::create([
-            'blood_group'=>'O+',
-            'qty' => '0'
+            'blood_group' => 'O+',
+            'qty' => '0',
         ]);
         BloodBag::create([
-            'blood_group'=>'O-',
-            'qty' => '0'
+            'blood_group' => 'O-',
+            'qty' => '0',
         ]);
 
-        
     }
 }
