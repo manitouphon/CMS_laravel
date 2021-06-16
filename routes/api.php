@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 /* ==================Authentication Controller=============== */
 Route::prefix('auth')->group(function () {
     Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('/user-profile', [AuthController::class, 'profile']);
+        Route::get('/user-profile', [AuthController::class, 'profile']);
     });
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
