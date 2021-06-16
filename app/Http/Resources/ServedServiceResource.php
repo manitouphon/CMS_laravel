@@ -15,9 +15,9 @@ class ServedServiceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'patient' => $this->serveServicesCollection->patients,
-            'total_fee'=> $this->total_fee,
+            'id'=>$this->id,
+            "patient" => $this->patients,
+            "service" => $this->services,
         ];
     }
 }

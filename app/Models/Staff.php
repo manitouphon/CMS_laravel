@@ -31,9 +31,12 @@ class Staff extends Model
 
     public static function checkIfDoctorAvialable($doctor_id)
     {
-        Staff::calculateAvailability($doctor_id);
-        $staffWorkhours = new WorkingScheduleResource(WorkingSchedule::findOrFail($doctor_id));
-        return ($staffWorkhours->status_day === 1 && $staffWorkhours->status_hour === 1);
+       //Staff::calculateAvailability($doctor_id);
+        $staffWorkhours = WorkingSchedule::where("staff_id", $doctor_id)->first();
+        if(empty($staffWorkhours))
+            return false;
+        else
+            return ($staffWorkhours->status_day === 1 && $staffWorkhours->status_hour === 1);
     }
 
     public static function calculateAvailability($doctor_id){

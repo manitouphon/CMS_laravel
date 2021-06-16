@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class WorkingSchedule extends Model
 {
     use HasFactory;
-    protected $fillable = ['working_day', 'start_time', 'end_time', 'status_day', 'status_hour', 'staff_id'];
+    protected $fillable = ['working_day', 'start_time', 'end_time', 'staff_id'];
 
     public function staffs()
     {

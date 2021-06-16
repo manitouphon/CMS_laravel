@@ -27,8 +27,6 @@ class WorkingScheduleRequest extends FormRequest
             "working_day" => "required|max:7|min:7",
             "start_time" => "required",
             "end_time" => "required",
-            "status_day" => "required",
-            "status_hour" => "required",
             "staff_id" => "required",
         ];
     }

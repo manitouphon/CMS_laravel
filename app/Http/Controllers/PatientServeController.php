@@ -12,7 +12,7 @@ class PatientServeController extends Controller
 {
     public function index()
     {
-        return ServedServicesCollectionResource::collection(ServedServicesCollection::all());
+        return ServedServiceResource::collection(ServedService::all());
     }
     public function show_patient_doctor(){
         return ServedServiceResource::collection(ServedService::where('doc_id',auth()->user()->id)->get());
