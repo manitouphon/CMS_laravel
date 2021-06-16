@@ -15,18 +15,10 @@ class TestingController extends Controller
     public function index(Request $request)
     {
         //EXPERIMENT: WorkingSchedule
-    
+
         $daysData = Staff::calculateAvailability($request->doc_id);
         return response()->json(["Test"=>$daysData]);
-        return response()->json([
-            'sun' => $daysData[0],
-            'mon' => $daysData[1],
-            'tue' => $daysData[2],
-            'wed' => $daysData[3],
-            'thu' => $daysData[4],
-            'fri' => $daysData[5],
-            'sat' => $daysData[6]
-        ]);
+
     }
 
     /**
