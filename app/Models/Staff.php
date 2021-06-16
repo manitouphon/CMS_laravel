@@ -87,7 +87,9 @@ class Staff extends Model
             //Check if $now is in the range of $start_time && $end_time
         if($now->lessThanOrEqualTo($end_time) && $now->greaterThanOrEqualTo($start_time) ){
             WorkingSchedule::find($schedules->id)->update(['status_hour'=>'1']);
-
+        }
+        else{
+            WorkingSchedule::find($schedules->id)->update(['status_hour'=>'0']);
         }
 
 
@@ -107,4 +109,6 @@ class Staff extends Model
 
 
     }
+    //TODO: Make func that returns all avaliable doctos @#manitou
+
 }
