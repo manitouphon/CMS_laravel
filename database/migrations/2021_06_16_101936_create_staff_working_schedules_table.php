@@ -15,6 +15,7 @@ class CreateStaffWorkingSchedulesTable extends Migration
     {
         Schema::create('staff_working_schedules', function (Blueprint $table) {
             $table->id();
+            $table->integer('working_schedule_id');
             $table->char('working_day', 7); // 0
             $table->string('start_time');
             $table->string('end_time');
@@ -23,7 +24,7 @@ class CreateStaffWorkingSchedulesTable extends Migration
     }
 
     /**
-     * Reverse the migrations.
+   wok  * Reverse the migrations.
      *
      * @return void
      */

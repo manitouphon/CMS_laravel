@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class BedAllotmentController extends Controller
 {
+    //TODO: Permission Doc/Recep/Admin
     /**
      * Display a listing of the resource.
      *
