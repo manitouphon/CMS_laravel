@@ -39,8 +39,11 @@ class Staff extends Model
     public static function calculateAvailability($doctor_id){
         //DoneTODO: discussion[doctor could only have 1 working schedule ]; @Manitou
 
-       $schedules = WorkingSchedule::where('staff_id',$doctor_id)->first();
+       $schedules = StaffWorkingSce::where('staff_id',$doctor_id)->get();
        $workingDays = $schedules->working_day;
+       foreach ($schedules as $key => $value   ){
+
+       }//TODO: Status: Added Staff_working_Schedule, so, also calculate status_day && status_hour from this too
 
 
        $bool_workingDays = [false,false,false,false,false,false,false];
