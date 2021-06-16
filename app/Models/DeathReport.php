@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class DeathReport extends Model
 {
     use HasFactory;
+    protected $fillable= [
+        'date',
+        'cause',
+        'des',
+        'service_fee',
+        'doc_id'
+    ];
 }

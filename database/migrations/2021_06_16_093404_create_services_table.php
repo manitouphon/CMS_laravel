@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogOtherServicesTable extends Migration
+class CreateServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateLogOtherServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_other_services', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('remark');
+            $table->string('des');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateLogOtherServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log_other_services');
+        Schema::dropIfExists('services');
     }
 }

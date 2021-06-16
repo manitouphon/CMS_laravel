@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BedAllotmentRequest;
 use App\Models\BedAllotment;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 
 class BedAllotmentController extends Controller
@@ -15,7 +16,9 @@ class BedAllotmentController extends Controller
      */
     public function index()
     {
-        return response()->json(['data' => BedAllotment::all()]);
+        if(Gate::allows('isAdmin')){
+            return response()->json(['data' => BedAllotment::all()]);
+        }
     }
 
     /**
