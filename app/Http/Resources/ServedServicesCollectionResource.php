@@ -15,8 +15,9 @@ class ServedServicesCollectionResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'doc_id' => $this->servedservices->doc_id,
             'patient'=>$this->patients,
-            'serve_service_bed' => $this->servedservices->bedAllotments,
+            'serve_service_bed' => $this->servedservices,
             'serve_service_birth' => $this->servedservices->birthReports,
             'serve_service_surgery' => $this->servedservices->surgeryReports
         ];

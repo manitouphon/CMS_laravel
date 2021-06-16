@@ -42,7 +42,7 @@ Route::prefix('patient')->middleware("auth:sanctum")->group(function () {
     Route::post("/", [PatientController::class, 'store']);
     Route::put("/{pat_id}", [PatientController::class, 'update']);
     Route::delete("/{pat_id}", [PatientController::class, 'destroy']);
-
+    Route::get("doctor/{doctor_id}" , [\App\Http\Controllers\PatientServeController::class, 'show_patient_doctor']);
 });
 
 //Admin Only Middleware (Sanctum)

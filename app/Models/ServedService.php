@@ -12,6 +12,10 @@ class ServedService extends Model
     protected $fillable = [
         'total_fee', 'doc_id', 'bed_allotment_id', 'birth_report_id', 'surgery_report_id', 'medicine_purchase_id', 'other_service_id',
     ];
+    public function serveServicesCollection()
+    {
+        return $this->hasOne(ServedServicesCollection::class, 'id','bed_allotment_id');
+    }
     public  function  bedAllotments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(BedAllotment::class, 'id','bed_allotment_id');
@@ -25,7 +29,7 @@ class ServedService extends Model
         return $this->hasMany(BirthReport::class,'id','birth_report_id');
     }
 
-    protected function isOtherService($req)
+    protected function isOtherService($req): bool
     {
         return $req->other_service_id === 1;
     }
