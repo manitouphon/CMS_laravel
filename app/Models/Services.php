@@ -9,7 +9,11 @@ class Services extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
-        'name','remark','des',
+    protected $fillable = [
+        'name', 'remark', 'des',
     ];
+    public function servedService()
+    {
+        return $this->hasOne(ServedService::class, 'service_id', 'id')->withDefault();
+    }
 }
