@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ServePatientRequest;
-use App\Models\BedAllotment;
 use App\Models\LogDeletedStaff;
 use App\Models\ServedService;
 use App\Models\Services;
@@ -38,6 +37,10 @@ class StaffController extends Controller
         //If nothing is returned in loop
         return response()->json(["Message" => "Invalid role query call"], 500);
     }
+    public function index_staff_avialable()
+    {
+        return response()->json(['data' => Staff::getDoctorAvialable()]);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,11 +55,10 @@ class StaffController extends Controller
             /*====Check for pat id existed=====*/
             /* // TODOS  */
             /* =======Insert Into Serve Service  ======= */
-            $serverService = ServedService::create($request->all());
-            $service = Services::create(array_merge($request->all(), ['service_id', $serverService->id]));
+            $service = Services::create($request->all());
+            $serverService = ServedService::create(array_merge($request->all(), ['service_id' => $service->id]));
             /* ===========Insert into payment table===================== */
             // TODO is staff also add payment while serve?
-
 
             return response()->json(['message' => "Patient has been served", 'data' => $serverService]);
         } else {

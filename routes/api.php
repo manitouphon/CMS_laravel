@@ -7,10 +7,11 @@ use App\Http\Controllers\BedAllotmentController;
 use App\Http\Controllers\BloodBagController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PatientServeController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\TestingController;
 use App\Http\Controllers\WorkingScheduleController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,13 +43,18 @@ Route::prefix('patient')->middleware("auth:sanctum")->group(function () {
     Route::post("/", [PatientController::class, 'store']);
     Route::put("/{pat_id}", [PatientController::class, 'update']);
     Route::delete("/{pat_id}", [PatientController::class, 'destroy']);
-    Route::get("doctor/{doctor_id}" , [\App\Http\Controllers\PatientServeController::class, 'show_patient_doctor']);
+    Route::get("doctor/{doctor_id}", [\App\Http\Controllers\PatientServeController::class, 'show_patient_doctor']);
+});
+
+Route::prefix('serve')->group(function () {
+    Route::get('/', [PatientServeController::class, 'index_serve']);
 });
 
 //Admin Only Middleware (Sanctum)
 Route::group(["middleware" => "auth:sanctum"], function () {
     /* ================Staff controller======================== */
     Route::resource('/staff', StaffController::class);
+    Route::get('/doctor', [StaffController::class, 'index_staff_avialable']);
     /* ================Bed Allotment controller======================== */
     Route::resource('/bed-allotment', BedAllotmentController::class);
     /* ================Medicine controller======================== */
@@ -59,8 +65,6 @@ Route::group(["middleware" => "auth:sanctum"], function () {
     /* ==========Working Schedule Controller================== */
     Route::resource('/working-schedule', WorkingScheduleController::class);
 });
-
-
 
 //=======================Testing Purpose Only =================
 
