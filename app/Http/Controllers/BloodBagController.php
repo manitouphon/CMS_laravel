@@ -13,9 +13,15 @@ class BloodBagController extends Controller
 
     private $bGroups = ['A+','A-','AB+','AB-','B+','B-','O+','O-'];
 
+    //TODO: Add indexing
+    public function index(){
+
+    }
 
     public function update(Request $request)
     {
+        if(Gate::allows('isAdmin') || Gate::allows('isDoctor'))
+
         foreach ($this->bGroups as $bGroup){
             if($request->blood_group === $bGroup){
                 if( Gate::allows('isAdmin', [$request]) ){
