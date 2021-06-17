@@ -22,6 +22,7 @@ class CreateBedAllotmentsTable extends Migration
             $table->string('is_discharge');
             $table->string('discharge_date')->nullable();
             $table->string('discharge_time')->nullable();
+            $table->string('served_service_id');
             $table->float('service_fee', 11, 2)->nullable();
             $table->integer('nurse_id');
             $table->timestamps();
