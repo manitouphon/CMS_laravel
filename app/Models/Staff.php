@@ -73,20 +73,11 @@ class Staff extends Model
         //Bitwise OR all working_days.
         $wd_final = decbin($wd_final);  //Expected 1 or 0 of length 7
 
-<<<<<<< HEAD
-        $schedules = WorkingSchedule::where('staff_id', $doctor_id)->first();
-        $workingDays = $schedules->working_day;
-
-        $bool_workingDays = [false, false, false, false, false, false, false];
-        for ($i = 0; $i < strlen($workingDays); $i++) {
-            if ($workingDays[$i] === '1') {
-=======
 
 
        $bool_workingDays = [false,false,false,false,false,false,false];
        for($i = 0; $i < strlen($wd_final); $i++){
             if($wd_final[$i] === '1'){
->>>>>>> ab023a4bc6a377fb6393b6578b657357cdd28ff8
                 $bool_workingDays[$i] = true;
             } else {
                 $bool_workingDays[$i] = false;
@@ -108,15 +99,6 @@ class Staff extends Model
             'Sat' => $bool_workingDays[6],
         ];
         $day = $now->isoFormat('ddd');
-<<<<<<< HEAD
-        foreach ($expected_day as $ddd => $value) {
-            if ($day === $ddd) {
-                if ($value === true) {
-                    WorkingSchedule::find($schedules->id)->update(['status_day' => '1']);
-                } //If $value === 1
-                else {
-                    WorkingSchedule::find($schedules->id)->update(['status_day' => '0']);
-=======
         foreach ($expected_day as $ddd => $value){
             if($day === $ddd){
                 if($value === true){
@@ -126,24 +108,11 @@ class Staff extends Model
                 else{
                     WorkingSchedule::find($working_schedule->id)->update(['status_day'=>'0']);
                     return null;
->>>>>>> ab023a4bc6a377fb6393b6578b657357cdd28ff8
                 }
             } //If match $ddd from $expected array
         }
 
         //Calculate: status_hour
-<<<<<<< HEAD
-        $now->hour = $now->hour + 7; //Default it will be UTC which has GTM == + 0; Cambodia has GTM +7
-        $start_time = Carbon::parse($schedules->start_time);
-        $end_time = Carbon::parse($schedules->end_time);
-
-        //Check if $now is in the range of $start_time && $end_time
-        if ($now->lessThanOrEqualTo($end_time) && $now->greaterThanOrEqualTo($start_time)) {
-            WorkingSchedule::find($schedules->id)->update(['status_hour' => '1']);
-        } else {
-            WorkingSchedule::find($schedules->id)->update(['status_hour' => '0']);
-        }
-=======
         $key_index = -1;
         $now->hour = $now->hour+7; //Default it will be UTC which has GTM == + 0; Cambodia has GTM +7
         $i =-1;
@@ -192,7 +161,6 @@ class Staff extends Model
         return [$t,$now,$start_time, $end_time];
 
 
->>>>>>> ab023a4bc6a377fb6393b6578b657357cdd28ff8
 
         //PURPOSE::TESTING
         return [
