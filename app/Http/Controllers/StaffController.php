@@ -37,7 +37,7 @@ class StaffController extends Controller
         //If nothing is returned in loop
         return response()->json(["Message" => "Invalid role query call"], 500);
     }
-    public function index_staff_avialable()
+    public function index_staff_available()
     {
         return response()->json(['data' => Staff::getDoctorAvialable()]);
     }

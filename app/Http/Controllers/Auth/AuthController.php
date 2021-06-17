@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterNewUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\Staff;
 use App\Models\User;
+use App\Models\WorkingSchedule;
 
 class AuthController extends Controller
 {
@@ -24,6 +25,7 @@ class AuthController extends Controller
 
         $user = User::create(array_merge($request->validated(), ['password' => bcrypt($request->password)]));
         $staff = Staff::create(array_merge($request->validated(), ['user_id' => $user->id]));
+        WorkingSchedule::create(["status_day"=>0, "status_hour"=>0,"staff_id" => $staff->id]);
 
         return response()->json(['message' => "User successfully register"]);
 

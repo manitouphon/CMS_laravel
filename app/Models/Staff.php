@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Staff extends Model
 {
-
     use HasFactory;
     public $table = 'staffs';
     protected $fillable = [
@@ -28,9 +27,10 @@ class Staff extends Model
         'role',
     ];
 
+
     public static function checkIfDoctorAvialable($doctor_id)
     {
-        //Staff::calculateAvailability($doctor_id);
+        Staff::calculateAvailability($doctor_id);
         $staffWorkhours = WorkingSchedule::where("staff_id", $doctor_id)->first();
         if (empty($staffWorkhours)) {
             return false;
@@ -39,8 +39,9 @@ class Staff extends Model
         }
 
     }
-    public static function getDoctorAvialable()
+    public static function getDoctorAvailable()
     {
+
         return Staff::join("working_schedules", "staffs.id", "working_schedules.staff_id")
             ->where("staffs.role", "doctor")
             ->where("status_day", 1)
@@ -48,6 +49,14 @@ class Staff extends Model
             ->get();
     }
 
+
+    //TODO Fixing:
+    public static function calculateAllAvailability(){
+        $doctors = Staff::where("role","doctor")->get();
+        foreach($doctors as $key => $value){
+            Staff::calculateAvailability($value['id']);
+        }
+    }
     public static function calculateAvailability($doctor_id)
     {
         //DoneTODO: discussion[doctor could only have 1 working schedule ]; @Manitou
@@ -102,11 +111,11 @@ class Staff extends Model
         foreach ($expected_day as $ddd => $value){
             if($day === $ddd){
                 if($value === true){
-                    WorkingSchedule::find($working_schedule->id)->update(['status_day'=>'1']);
+                    WorkingSchedule::where('id',$working_schedule->id)->update(['status_day'=>'1']);
 
                 }//If $value === 1
                 else{
-                    WorkingSchedule::find($working_schedule->id)->update(['status_day'=>'0']);
+                    WorkingSchedule::where('id',$working_schedule->id)->update(['status_day'=>'0']);
                     return null;
                 }
             } //If match $ddd from $expected array
@@ -150,14 +159,16 @@ class Staff extends Model
 
             //Check if $now is in the range of $start_time && $end_time
         if($now->lessThanOrEqualTo($end_time) && $now->greaterThanOrEqualTo($start_time) ){
-            WorkingSchedule::find($working_schedule->id)->update(['status_hour'=>'1']);
+            WorkingSchedule::where('id',$working_schedule->id)->update(['status_hour'=>'1']);
             $t = true;
         }
         else{
-            WorkingSchedule::find($working_schedule->id)->update(['status_hour'=>'0']);
+            WorkingSchedule::where('id',$working_schedule->id)->update(['status_hour'=>'0']);
             $t = false;
+
         }
 
+        return (WorkingSchedule::where('id', $working_schedule->id)->get());
         return [$t,$now,$start_time, $end_time];
 
 
@@ -173,6 +184,13 @@ class Staff extends Model
             'sat' => $bool_workingDays[6],
         ];
         //STATUS: Working Fine.
+
+
+
+
+
+
+
 
     }
     //TODO: Make func that returns all avaliable doctos @#manitou

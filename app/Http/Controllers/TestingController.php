@@ -16,8 +16,8 @@ class TestingController extends Controller
     {
         //EXPERIMENT: WorkingSchedule
 
-        $daysData = Staff::calculateAvailability($request->doc_id);
-        return response()->json(["Test"=>$daysData]);
+        $daysData = Staff::calculateAllAvailability();
+        return response($daysData);
 
     }
 
@@ -32,16 +32,6 @@ class TestingController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

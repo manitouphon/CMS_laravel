@@ -54,7 +54,7 @@ Route::prefix('serve')->group(function () {
 Route::group(["middleware" => "auth:sanctum"], function () {
     /* ================Staff controller======================== */
     Route::resource('/staff', StaffController::class);
-    Route::get('/doctor', [StaffController::class, 'index_staff_avialable']);
+    Route::get('/doctor', [StaffController::class, 'index_staff_available']);
     /* ================Bed Allotment controller======================== */
     Route::resource('/bed-allotment', BedAllotmentController::class);
     /* ================Medicine controller======================== */

@@ -9,9 +9,10 @@ class StaffWorkingSchedule extends Model
 {
     use HasFactory;
     protected $fillable=[
-      'working_day',
-      'start_time',
-      'end_time',
+        'working_schedule_id',
+        'working_day',
+        'start_time',
+        'end_time',
     ];
 
 }

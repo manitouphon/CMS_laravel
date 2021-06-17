@@ -14,5 +14,7 @@ class WorkingSchedule extends Model
     {
         return $this->hasOne(Staff::class, 'id', 'staff_id')->withDefault();
     }
+
+
     public $timestamps = null;
 }
