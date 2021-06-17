@@ -13,9 +13,13 @@ class BloodBagController extends Controller
 
     private $bGroups = ['A+','A-','AB+','AB-','B+','B-','O+','O-'];
 
-    //TODO: Add indexing
+    //TODO COMPLETED: Add indexing
     public function index(){
-
+        if(Gate::allows('isAdmin') || Gate::allows('isDoctor')){
+            $data = BloodBag::all();
+            return response()->json(["Message" => $data]);
+        }
+        else abort(403);
     }
 
     public function update(Request $request)
@@ -30,7 +34,7 @@ class BloodBagController extends Controller
                     return response()->json(["Message" => "Update Successfully"]);
                 }
                 else{
-                    return response()->json(["Message" => "Access Forbidden"],403);
+                    abort(403);
                 }
             }
         }

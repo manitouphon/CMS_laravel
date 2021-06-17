@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use App\Http\Resources\WorkingScheduleResource;
+use App\Models\WorkingSchedule;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\WorkingSchedule;
 
 class Staff extends Model
 {
@@ -31,13 +30,26 @@ class Staff extends Model
 
     public static function checkIfDoctorAvialable($doctor_id)
     {
+        //Staff::calculateAvailability($doctor_id);
+        $staffWorkhours = WorkingSchedule::where("staff_id", $doctor_id)->first();
+        if (empty($staffWorkhours)) {
+            return false;
+        } else {
+            return ($staffWorkhours->status_day === 1 && $staffWorkhours->status_hour === 1);
+        }
 
-        Staff::calculateAvailability($doctor_id);
-        $staffWorkHours = new WorkingScheduleResource(WorkingSchedule::findOrFail($doctor_id));
-        return ($staffWorkHours->status_day === 1 && $staffWorkHours->status_hour === 1);
+    }
+    public static function getDoctorAvialable()
+    {
+        return Staff::join("working_schedules", "staffs.id", "working_schedules.staff_id")
+            ->where("staffs.role", "doctor")
+            ->where("status_day", 1)
+            ->where("status_hour", 1)
+            ->get();
     }
 
-    public static function calculateAvailability($doctor_id){
+    public static function calculateAvailability($doctor_id)
+    {
         //DoneTODO: discussion[doctor could only have 1 working schedule ]; @Manitou
         $working_schedule = WorkingSchedule::where('staff_id', $doctor_id)->first();
         $ws_id = $working_schedule->id;
@@ -67,17 +79,16 @@ class Staff extends Model
        for($i = 0; $i < strlen($wd_final); $i++){
             if($wd_final[$i] === '1'){
                 $bool_workingDays[$i] = true;
-            }
-            else{
+            } else {
                 $bool_workingDays[$i] = false;
             }
-       }
+        }
 
 
         //Calculating availability and set it to status_day && status_hour;
         $now = Carbon::now();
 
-       //Calculate: status_day
+        //Calculate: status_day
         $expected_day = [
             'Sun' => $bool_workingDays[0],
             'Mon' => $bool_workingDays[1],
@@ -85,7 +96,7 @@ class Staff extends Model
             'Wed' => $bool_workingDays[3],
             'Thu' => $bool_workingDays[4],
             'Fri' => $bool_workingDays[5],
-            'Sat' => $bool_workingDays[6]
+            'Sat' => $bool_workingDays[6],
         ];
         $day = $now->isoFormat('ddd');
         foreach ($expected_day as $ddd => $value){
@@ -98,7 +109,7 @@ class Staff extends Model
                     WorkingSchedule::find($working_schedule->id)->update(['status_day'=>'0']);
                     return null;
                 }
-            }//If match $ddd from $expected array
+            } //If match $ddd from $expected array
         }
 
         //Calculate: status_hour
@@ -152,17 +163,16 @@ class Staff extends Model
 
 
         //PURPOSE::TESTING
-        return[
+        return [
             'sun' => $bool_workingDays[0],
             'mon' => $bool_workingDays[1],
             'tue' => $bool_workingDays[2],
             'wed' => $bool_workingDays[3],
             'thu' => $bool_workingDays[4],
             'fri' => $bool_workingDays[5],
-            'sat' => $bool_workingDays[6]
+            'sat' => $bool_workingDays[6],
         ];
         //STATUS: Working Fine.
-
 
     }
     //TODO: Make func that returns all avaliable doctos @#manitou

@@ -19,7 +19,7 @@ class CreateLogBedAllotmentsTable extends Migration
             $table->integer('bed_number');
             $table->string('allotment_date')->nullable();
             $table->time('allotment_time')->nullable();
-
+            $table->integer("patient_id");
             $table->string('is_discharge');
             $table->string('discharge_date')->nullable();
             $table->string('discharge_time')->nullable();
