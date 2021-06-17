@@ -32,6 +32,7 @@ class BedAllotmentRequest extends FormRequest
             "discharge_date" => "required",
             "discharge_time" => "required",
             "service_fee" => "required",
+            "patient_id"=>"required",
             "nurse_id" => "required",
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Staff;
 
 class WorkingScheduleResource extends JsonResource
 {
@@ -16,9 +17,6 @@ class WorkingScheduleResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'working_day' => $this->working_day,
-            'start_time' => $this->start_time,
-            'end_time' => $this->end_time,
             'status_day' => $this->status_day,
             'status_hour' => $this->status_hour,
             /* ===========get staff from relationship in table working schedule============= */

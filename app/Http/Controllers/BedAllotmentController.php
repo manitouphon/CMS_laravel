@@ -3,19 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BedAllotmentRequest;
+use App\Http\Resources\BedAllotmentResource;
 use App\Models\BedAllotment;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 class BedAllotmentController extends Controller
 {
+    //TODO: Permission Doc/Recep/Admin
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return response()->json(['data' => BedAllotment::all()]);
+        if(Gate::allows('isAdmin')){
+            return BedAllotmentResource::collection(BedAllotment::all());
+        }else{
+            abort(403);
+        }
     }
 
     /**

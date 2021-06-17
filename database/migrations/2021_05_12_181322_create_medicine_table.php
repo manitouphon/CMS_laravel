@@ -23,6 +23,7 @@ class CreateMedicineTable extends Migration
             $table->float('sell_price', 10, 2);
             $table->string('status')->nullable();
             $table->string('description')->nullable();
+            $table->string('img_url')->nullable();
             $table->timestamps();
         });
     }

@@ -16,7 +16,15 @@ class BedAllotment extends Model
         "is_discharge",
         "discharge_date",
         "discharge_time",
+        "served_service_id",
+        "patient_id",
         "service_fee",
         "nurse_id",
     ];
+
+    public function patient(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Patient::class, 'id', 'patient_id');
+    }
+    public $timestamps=null;
 }

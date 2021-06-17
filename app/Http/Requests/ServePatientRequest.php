@@ -24,15 +24,14 @@ class ServePatientRequest extends FormRequest
     public function rules()
     {
         return [
-            "total_fee" => "required",
             "doc_id" => "required",
-            "bed_allotment_id" => "nullable",
-            "birth_report_id" => "nullable",
-            "surgery_report_id" => "nullable",
+            "patient_id" => "required",
             "medicine_purchase_id" => "nullable",
-            "other_service_id" => "nullable",
-            "pat_id" => "required",
             "total_payment_id" => "nullable",
+            "surgery_report_id" => "nullable",
+            "name" => "required",
+            "remark" => "nullable",
+            "des" => "required",
         ];
     }
 

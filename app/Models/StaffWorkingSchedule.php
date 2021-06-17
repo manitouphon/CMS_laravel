@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DeathReport extends Model
+class StaffWorkingSchedule extends Model
 {
     use HasFactory;
-    protected $fillable= [
-        'date',
-        'cause',
-        'des',
-        'service_fee',
-        'doc_id'
+    protected $fillable=[
+      'working_day',
+      'start_time',
+      'end_time',
     ];
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServedServicesCollectionTable extends Migration
+class CreateStaffWorkingSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateServedServicesCollectionTable extends Migration
      */
     public function up()
     {
-        Schema::create('served_services_collections', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->integer('served_service_id');
-            $table->integer('pat_id');
-            $table->integer('total_payment_id');
+        Schema::create('staff_working_schedules', function (Blueprint $table) {
+            $table->id();
+            $table->integer('working_schedule_id');
+            $table->char('working_day', 7); // 0
+            $table->string('start_time');
+            $table->string('end_time');
             $table->timestamps();
         });
     }
@@ -29,7 +30,6 @@ class CreateServedServicesCollectionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('served_services_collection');
-
+        Schema::dropIfExists('staff_working_schedules');
     }
 }

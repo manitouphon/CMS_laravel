@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBedAllotmentsTable extends Migration
+class AddFieldBedAllotments extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateBedAllotmentsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('bed_allotments');
         Schema::create('bed_allotments', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->string('bed_type');
             $table->integer('bed_number');
             $table->string('allotment_date')->nullable();
-            $table->string('allotment_time')->nullable();
+            $table->time('allotment_time')->nullable();
             $table->string('is_discharge');
             $table->string('discharge_date')->nullable();
             $table->string('discharge_time')->nullable();
             $table->float('service_fee', 11, 2)->nullable();
             $table->integer('nurse_id');
-            $table->timestamps();
-
+            $table->integer('served_service_id');
         });
     }
 
@@ -36,6 +36,6 @@ class CreateBedAllotmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bed_allotments');
+
     }
 }
