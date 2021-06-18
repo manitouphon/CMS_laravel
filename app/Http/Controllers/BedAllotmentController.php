@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 
 class BedAllotmentController extends Controller
 {
-    //TODO: Permission Doc/Recep/Admin
+    //TODO COMPLETED: Permission Doc/Recep/Admin
     /**
      * Display a listing of the resource.
      *
@@ -18,22 +18,17 @@ class BedAllotmentController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         if (Gate::allows('isAdmin')) {
+=======
+        if(Gate::allows('isAdmin') || Gate::allows('isDoctor')  || Gate::allows('isReceptionist')  ){
+>>>>>>> f0f663835395616c64cd37cbf189c9e2b97ac413
             return BedAllotmentResource::collection(BedAllotment::all());
         } else {
             abort(403);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -43,31 +38,15 @@ class BedAllotmentController extends Controller
      */
     public function store(BedAllotmentRequest $request)
     {
-        $bed = BedAllotment::create($request->all());
+        if(Gate::allows('isAdmin') || Gate::allows('isDoctor')  || Gate::allows('isReceptionist')){
+            $bed = BedAllotment::create($request->all());
 
-        return response()->json(['message' => "Bed already added", 'data' => $bed]);
-    }
+            return response()->json(['message' => "Bed already added", 'data' => $bed]);
+        }
+        else{
+            abort(403);
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -79,10 +58,14 @@ class BedAllotmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $bed = BedAllotment::findOrFail($id);
-        $bed->update($request->all());
+        if(Gate::allows('isAdmin') || Gate::allows('isDoctor')  || Gate::allows('isReceptionist')  ){
+            $bed = BedAllotment::findOrFail($id);
+            $bed->update($request->all());
+            return response(['message' => "Update successfully"]);
+        }else{
+            abort(403);
+        }
 
-        return response(['message' => "Update successfully"]);
 
     }
 
@@ -94,8 +77,13 @@ class BedAllotmentController extends Controller
      */
     public function destroy($id)
     {
-        $bed = BedAllotment::findOrFail($id);
-        $bed->delete();
-        return response()->json(['message' => "Bed already deleted"]);
+        if(Gate::allows('isAdmin') || Gate::allows('isDoctor')  || Gate::allows('isReceptionist')  ){
+            $bed = BedAllotment::findOrFail($id);
+            $bed->delete();
+            return response()->json(['message' => "Bed already deleted"]);
+        }else{
+            abort(403);
+        }
+
     }
 }

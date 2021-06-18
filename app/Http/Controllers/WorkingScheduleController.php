@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkingScheduleRequest;
 use App\Http\Resources\WorkingScheduleResource;
+use App\Models\Staff;
+use App\Models\StaffWorkingSchedule;
 use App\Models\WorkingSchedule;
 use Illuminate\Http\Request;
 
@@ -20,15 +22,7 @@ class WorkingScheduleController extends Controller
         return ['data' => WorkingScheduleResource::collection(WorkingSchedule::all())];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -38,27 +32,32 @@ class WorkingScheduleController extends Controller
      */
     public function store(WorkingScheduleRequest $request)
     {
-        $workingScedule = WorkingSchedule::create($request->all());
+        $staff_id = Staff::where('id',$request->staff_id)->first();
+        if($staff_id === null) abort(404);
 
-        return response()->json(['message' => "Working schedule added", 'data' => $workingScedule]);
+
+        $wk_sch = WorkingSchedule::where('staff_id',$staff_id->id)->first();
+        $array = array_merge($request->all(),["working_schedule_id" => "$wk_sch->id"]);
+        $data = StaffWorkingSchedule::create($array );
+
+        return response()->json(['message' => "Working scedule added", 'data' => $data]);
     }
 
+
+
     /**
-     * Display the specified resource.
+     * Update the specified resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function update(Request $request, $staff_id)
     {
-        //
-    }
+        $wk_schedule = WorkingSchedule::findOrFail($staff_id)->first();
+        $staff_wk_schedule = StaffWorkingSchedule::where('working_schedule_id',$wk_schedule->id)->get;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+    }
 
     /**
      * Remove the specified resource from storage.
