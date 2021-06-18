@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BedAllotmentRequest;
 use App\Http\Resources\BedAllotmentResource;
 use App\Models\BedAllotment;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class BedAllotmentController extends Controller
 {
@@ -18,9 +18,9 @@ class BedAllotmentController extends Controller
      */
     public function index()
     {
-        if(Gate::allows('isAdmin')){
+        if (Gate::allows('isAdmin')) {
             return BedAllotmentResource::collection(BedAllotment::all());
-        }else{
+        } else {
             abort(403);
         }
     }

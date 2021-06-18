@@ -40,7 +40,7 @@ class WorkingScheduleController extends Controller
     {
         $workingScedule = WorkingSchedule::create($request->all());
 
-        return response()->json(['message' => "Working scedule added", 'data' => $workingScedule]);
+        return response()->json(['message' => "Working schedule added", 'data' => $workingScedule]);
     }
 
     /**
@@ -59,23 +59,6 @@ class WorkingScheduleController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
