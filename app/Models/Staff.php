@@ -6,6 +6,7 @@ use App\Models\WorkingSchedule;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\StaffWorkingSchedule;
 
 class Staff extends Model
 {
