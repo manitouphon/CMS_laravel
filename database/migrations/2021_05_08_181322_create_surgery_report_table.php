@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateSurgeryReportTable extends Migration
 {
@@ -13,14 +13,14 @@ class CreateSurgeryReportTable extends Migration
      */
     public function up()
     {
-        Schema::create('surgery_reports', function (Blueprint $table) {
+        Schema::create('surgery_report', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->date('date')->nullable();
             $table->string('status')->nullable();
             $table->string('remark')->nullable();
             $table->string('des')->nullable();
             $table->float('service_fee', 10, 2)->nullable();
-            $table->integer('doc_id');
+            $table->foreignId('doc_id')->constrained('staff');
 
         });
     }

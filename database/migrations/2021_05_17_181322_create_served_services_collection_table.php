@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateServedServicesCollectionTable extends Migration
 {
@@ -13,12 +13,14 @@ class CreateServedServicesCollectionTable extends Migration
      */
     public function up()
     {
-        Schema::create('served_services_collections', function (Blueprint $table) {
+        Schema::create('served_services_collection', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->integer('served_service_id');
-            $table->integer('pat_id');
-            $table->integer('total_payment_id');
-            $table->timestamps();
+            $table->foreignId('served_service_id')->constrained('served_services');
+            $table->foreignId('doc_id')->constrained('staff');
+            $table->foreignId('pat_id')->constrained('patients');            $table->foreignId('total_payment_id')->constrained('total_payment');
+
+
+
         });
     }
 
@@ -30,6 +32,5 @@ class CreateServedServicesCollectionTable extends Migration
     public function down()
     {
         Schema::dropIfExists('served_services_collection');
-
     }
 }

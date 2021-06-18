@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateServedServicesTable extends Migration
 {
@@ -16,13 +16,13 @@ class CreateServedServicesTable extends Migration
         Schema::create('served_services', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
             $table->float('total_fee', 11, 2)->nullable();
-            $table->integer('doc_id');
-            $table->integer('bed_allotment_id')->nullable();
-            $table->integer('birth_report_id')->nullable();
-            $table->integer('surgery_report_id')->nullable();
-            $table->integer('medicine_purchase_id')->nullable();
-            $table->integer('other_service_id')->nullable();
-            $table->timestamps();
+
+            $table->foreignId('bed_allotment_id')->constrained('bed_allotment');
+            $table->foreignId('birth_report_id')->constrained('birth_report');
+            $table->foreignId('surgery_report_id')->constrained('surgery_report');
+            $table->foreignId('medicine_purchase_id')->constrained('medicine_purchase');
+
+
         });
     }
 

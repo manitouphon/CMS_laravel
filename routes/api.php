@@ -1,14 +1,11 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\BedAllotmentController;
-use App\Http\Controllers\BloodBagController;
-use App\Http\Controllers\MedicineController;
+
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\StaffController;
-use App\Http\Controllers\WorkingScheduleController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,47 +17,39 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
- */
-/* ==================Authentication Controller=============== */
-Route::prefix('auth')->group(function () {
-    Route::middleware(['auth:sanctum'])->group(function () {
-        Route::post('/user-profile', [AuthController::class, 'profile']);
-    });
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/forget-password', [ForgotPasswordController::class, 'sendPasswordResetEmail']);
-    Route::post('/reset-password', [ResetPasswordController::class, 'passwordResetProcess']);
-});
-/* ================Staff controller======================== */
-Route::resource('/staff', StaffController::class);
-/* ================Bed Allotment controller======================== */
-Route::resource('/bed-allotment', BedAllotmentController::class);
-/* ================Medicine controller======================== */
-Route::resource('/medicine', MedicineController::class);
-/* ==========Working Schedule Controller================== */
-Route::resource('/working-schedule', WorkingScheduleController::class);
+*/
 
-/* ==========Patient Controller================== */
-Route::prefix('patient')->middleware("auth:sanctum")->group(function () {
-    /* ==========Patient Controller================== */
-    Route::get('/', [PatientController::class, 'getPatient']);
-    Route::get('{pat_id}', [PatientController::class, 'getPatient']);
-    Route::post("/", [PatientController::class, 'addPatient']);
-    Route::put("/{pat_id}", [PatientController::class, 'updatePatient']);
-    Route::delete("/{pat_id}", [PatientController::class, 'deletePatient']);
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+Route::post('/login', [LoginController::class,'login']);
+Route::post('/register',[RegisterController::class,'register']);
 
+
+Route::group(['middleware'=>['auth:sanctum']], function () {
+    Route::get('Doctor', [StaffController::class, 'getDoctor']);
+    Route::get('Pharmacist', [StaffController::class, 'getPharmacist']);
+    Route::get('Receptionist', [StaffController::class, 'getReceptionist']);
+
+    Route::patch('Doctor/{id}', [StaffController::class,'updateDoctor']);
+    Route::patch('Pharmacist/{id}', [StaffController::class,'updatePharmacist']);
+    Route::patch('Receptionist/{id}', [StaffController::class,'updateReceptionist']);
+
+    Route::get('Doctor/{id}', [StaffController::class,'findDoctor']);
+    Route::get('Pharmacist/{id}', [StaffController::class,'findPharmacist']);
+    Route::get('Receptionist/{id}', [StaffController::class,'findReceptionist']);
+
+    Route::post('addDoctor',[StaffController::class,'addDoctor']);
+    Route::post('addPharmacist',[StaffController::class,'addPharmacist']);
+    Route::post('addReceptionist',[StaffController::class,'addReceptionist']);
+
+    Route::delete('deleteDoctor/{id}', [StaffController::class,'destroyDoctor']);
+    Route::delete('deletePharmacist/{id}', [StaffController::class,'destroyPharmacist']);
+    Route::delete('deleteReceptionist/{id}', [StaffController::class,'destroyReceptionist']);
+
+
+    Route::get('patient',[PatientController::class,'getPatient']);
+    Route::get('patient/{pat_id}',[PatientController::class,'getPatient']);
 });
 
-//Admin Only Middleware (Sanctum)
-Route::group(["middleware" => "auth:sanctum"], function () {
-    /* ================Staff controller======================== */
-    Route::resource('/staff', StaffController::class);
-    /* ================Bed Allotment controller======================== */
-    Route::resource('/bed-allotment', BedAllotmentController::class);
-    /* ================Medicine controller======================== */
-    Route::resource('/medicine', MedicineController::class);
-    /* ================Birth report Controller======================== */
-//    Route::resource('birth-report', )
-    /* ================Blood Bag Controller======================== */
-    Route::post('blood_bag', [BloodBagController::class, 'update']);
-});
+

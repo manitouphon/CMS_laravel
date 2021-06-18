@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateAppointmentTable extends Migration
 {
@@ -13,15 +13,15 @@ class CreateAppointmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('appointment', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
+
             $table->string('room_num', 45);
             $table->date('appoint_date')->nullable();
             $table->float('appoint_fee', 11, 0)->nullable();
-            $table->integer('doc_id');
-            $table->integer('pat_id');
-            $table->integer('recep_id');
-        });
+            $table->foreignId('doc_id')->constrained('staff');
+            $table->foreignId('pat_id')->constrained('patients');            $table->foreignId('recep_id')->nullable()->constrained('staff');
+       });
     }
 
     /**
